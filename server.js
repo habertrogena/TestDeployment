@@ -11,7 +11,7 @@ const port = 3000;
 //define a simple route 
 
 app.get('/',(req,res)=>{
-res.send('Wow habert is now becoming a devops engineern');
+res.send('Wow Today is tuesday');
 });
 
 //start the server
