@@ -21,8 +21,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --no-cache -t habertdev/testdeployment .
+          docker build --no-cache -t ${{ secrets.DOCKERHUB_USERNAME }}/testdeployment.
 
       - name: Push Docker image
         run: |
-          docker push habertdev/testdeployment
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/testdeployment
