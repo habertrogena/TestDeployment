@@ -3,26 +3,24 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - master  # Change this to your default branch if it's not 'main'
-      
+      - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Build Docker image
-        run: |
-          docker build --no-cache -t ${{ secrets.DOCKERHUB_USERNAME }}/testdeployment.
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/testdeployment .
 
-      - name: Push Docker image
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/testdeployment
+    - name: List Docker images
+      run: docker images
+
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/testdeployment
